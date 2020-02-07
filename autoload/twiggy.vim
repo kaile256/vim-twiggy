@@ -325,22 +325,22 @@ function! twiggy#get_branches() abort
   let locals = s:_git_branch_vv('heads')
   let locals_sorted = []
 
-    let head = s:git_cmd('rev-parse --symbolic-full-name --abbrev-ref HEAD', 0)[0]
-    if head ==# "HEAD"
-      call add(locals_sorted, {
-            \ 'decoration': s:icons['detached'].' ',
-            \ 'status': 'detached',
-            \ 'fullname': 'HEAD',
-            \ 'name': 'HEAD@'.s:git_cmd('rev-parse --revs-only --short HEAD', 0)[0],
-            \ 'is_local': 1,
-            \ 'current': 0,
-            \ 'remote': s:git_cmd('remote', 0)[0],
-            \ 'type': 'local',
-            \ 'tracking': '',
-            \ 'details': 'detached',
-            \ 'group': 'local'
-            \  })
-    endif
+  let head = s:git_cmd('rev-parse --symbolic-full-name --abbrev-ref HEAD', 0)[0]
+  if head ==# "HEAD"
+    call add(locals_sorted, {
+          \ 'decoration': s:icons['detached'].' ',
+          \ 'status': 'detached',
+          \ 'fullname': 'HEAD',
+          \ 'name': 'HEAD@'.s:git_cmd('rev-parse --revs-only --short HEAD', 0)[0],
+          \ 'is_local': 1,
+          \ 'current': 0,
+          \ 'remote': s:git_cmd('remote', 0)[0],
+          \ 'type': 'local',
+          \ 'tracking': '',
+          \ 'details': 'detached',
+          \ 'group': 'local'
+          \  })
+  endif
 
   let reflog = s:get_uniq_branch_names_from_reflog()
   let s:branches_not_in_reflog = []
@@ -977,7 +977,7 @@ function! s:Render() abort
   call s:mapping('r',       'Rebase',           [0])
   call s:mapping('R',       'Rebase',           [1])
   call s:mapping('^',       'Push',             [0, 0]) " deprecated
-  call s:mapping('g^',      'Push',             [1, 0]) " deprecated 
+  call s:mapping('g^',      'Push',             [1, 0]) " deprecated
   call s:mapping('!^',      'Push',             [0, 1]) " deprecated
   call s:mapping('V',       'Pull',             [])     " deprecated
   call s:mapping('P',       'Push',             [0, 0])
@@ -1013,7 +1013,7 @@ function! s:Render() abort
     nnoremap <buffer> gL :exec ':' . g:twiggy_git_log_command . ' ' . <SID>branch_under_cursor().fullname . '..'<CR>
   endif
 
- " {{{ Syntax
+  " {{{ Syntax
   syntax clear
 
   exec "syntax match TwiggyGroup '\\v(^[^\\ " . s:icons.current . "]+)'"
