@@ -1477,3 +1477,6 @@ endfunction
 autocmd BufEnter twiggy://* exec "command! -buffer Gstatus " . <SID>close_string() . " | silent normal! :<\C-U>Gstatus\<CR>"
 autocmd BufEnter twiggy://* exec "command! -buffer Gcommit " . <SID>close_string() . " | silent normal! :<\C-U>Gcommit\<CR>"
 autocmd BufEnter twiggy://* exec "command! -buffer Gblame  " . <SID>close_string() . " | silent normal! :<\C-U>Gblame\<CR>"
+
+" {{{1 modeline
+" vim: et ts=2 sts=2 sw=2 fdm=marker
