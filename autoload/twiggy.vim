@@ -1391,9 +1391,6 @@ function! s:Push(choose_upstream, ...) abort
   let flags = a:0 > 0 ? join(a:000) : ''
 
   if branch.tracking ==# '' && !a:choose_upstream
-    if g:twiggy_set_upstream
-      let flags .= ' -u'
-    endif
     if len(remote_groups) > 1
       redraw
       let group = input("Push to which remote?: ", '', "custom,TwiggyCompleteRemotes")
@@ -1403,6 +1400,10 @@ function! s:Push(choose_upstream, ...) abort
       return 1
     else
       let group = remote_groups[0]
+    endif
+
+    if g:twiggy_set_upstream
+      let flags .= ' -u'
     endif
   else
     if a:choose_upstream
