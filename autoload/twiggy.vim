@@ -203,6 +203,7 @@ endfunction
 "   {{{2 call
 function! s:call(mapping) abort
   let key = s:encode_mapping(a:mapping)
+  " call function named as s:g:twiggy_keymaps_foo[key][0] like s:Merge()
   if call('s:' . s:mappings[key][0], s:mappings[key][1])
     call s:ErrorMsg()
   else
