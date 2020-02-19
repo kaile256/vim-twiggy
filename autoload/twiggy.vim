@@ -965,38 +965,44 @@ function! s:Render() abort
     nnoremap <buffer> <silent> gg    :normal! 2gg<CR>
   endif
 
-  call s:mapping('<CR>',    'Checkout',         [1])
-  call s:mapping('c',       'Checkout',         [1])
-  call s:mapping('C',       'Checkout',         [0])
-  call s:mapping('o',       'Checkout',         [1])
-  call s:mapping('O',       'Checkout',         [0])
-  call s:mapping('gc',      'CheckoutAs',       [])
-  call s:mapping('go',      'CheckoutAs',       [])
-  call s:mapping('dd',      'Delete',           [])
-  call s:mapping('F',       'Fetch',            [0]) " deprecated
-  call s:mapping('f',       'Fetch',            [0])
-  call s:mapping('m',       'Merge',            [0, ''])
-  call s:mapping('M',       'Merge',            [1, ''])
-  call s:mapping('gm',      'Merge',            [0, '--no-ff'])
-  call s:mapping('gM',      'Merge',            [1, '--no-ff'])
-  call s:mapping('r',       'Rebase',           [0])
-  call s:mapping('R',       'Rebase',           [1])
-  call s:mapping('^',       'Push',             [0, 0]) " deprecated
-  call s:mapping('g^',      'Push',             [1, 0]) " deprecated
-  call s:mapping('!^',      'Push',             [0, 1]) " deprecated
-  call s:mapping('V',       'Pull',             [])     " deprecated
-  call s:mapping('P',       'Push',             [0, 0])
-  call s:mapping('gP',      'Push',             [1, 0])
-  call s:mapping('!P',      'Push',             [0, 1])
-  call s:mapping('p',       'Pull',             [])
-  call s:mapping(',',       'Rename',           [])
-  call s:mapping('<<',      'Stash',            [0])
-  call s:mapping('>>',      'Stash',            [1])
-  call s:mapping('i',       'CycleSort',        [0, 1])
-  call s:mapping('I',       'CycleSort',        [0, -1])
-  call s:mapping('gi',      'CycleSort',        [1, 1])
-  call s:mapping('gI',      'CycleSort',        [1, -1])
-  call s:mapping('a',       'ToggleSlashSort',  [])
+  let g:twiggy_keymaps = {
+        \ '<CR>':    ['Checkout',         [1]],
+        \ 'c':       ['Checkout',         [1]],
+        \ 'C':       ['Checkout',         [0]],
+        \ 'o':       ['Checkout',         [1]],
+        \ 'O':       ['Checkout',         [0]],
+        \ 'gc':      ['CheckoutAs',       []],
+        \ 'go':      ['CheckoutAs',       []],
+        \ 'dd':      ['Delete',           []],
+        \ 'F':       ['Fetch',            [0]],
+        \ 'f':       ['Fetch',            [0]],
+        \ 'm':       ['Merge',            [0, '']],
+        \ 'M':       ['Merge',            [1, '']],
+        \ 'gm':      ['Merge',            [0, '--no-ff']],
+        \ 'gM':      ['Merge',            [1, '--no-ff']],
+        \ 'r':       ['Rebase',           [0]],
+        \ 'R':       ['Rebase',           [1]],
+        \ '^':       ['Push',             [0, 0]],
+        \ 'g^':      ['Push',             [1, 0]],
+        \ '!^':      ['Push',             [0, 1]],
+        \ 'V':       ['Pull',             []],
+        \ 'P':       ['Push',             [0, 0]],
+        \ 'gP':      ['Push',             [1, 0]],
+        \ '!P':      ['Push',             [0, 1]],
+        \ 'p':       ['Pull',             []],
+        \ ',':       ['Rename',           []],
+        \ '<<':      ['Stash',            [0]],
+        \ '>>':      ['Stash',            [1]],
+        \ 'i':       ['CycleSort',        [0, 1]],
+        \ 'I':       ['CycleSort',        [0, -1]],
+        \ 'gi':      ['CycleSort',        [1, 1]],
+        \ 'gI':      ['CycleSort',        [1, -1]],
+        \ 'a':       ['ToggleSlashSort',  []],
+        \ }
+
+  for l:key in keys(g:twiggy_keymaps)
+    call s:mapping(l:key, g:twiggy_keymaps[l:key][0], g:twiggy_keymaps[l:key][1])
+  endfor
 
   nnoremap <buffer> <expr> . <SID>dot()
   function! s:dot() abort
