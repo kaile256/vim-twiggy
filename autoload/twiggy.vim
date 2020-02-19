@@ -101,6 +101,41 @@ let g:twiggy_show_full_ui           = get(g:,'twiggy_show_full_ui',           g:
 let g:twiggy_git_log_command        = get(g:,'twiggy_git_log_command',        ''                                                       )
 let g:twiggy_refresh_buffers        = get(g:,'twiggy_refresh_buffers',        1                                                        )
 
+let g:twiggy_keymaps = get(g:, 'twiggy_keymaps', {
+      \ '<CR>': ['Checkout',         [1]],
+      \ 'c':    ['Checkout',         [1]],
+      \ 'C':    ['Checkout',         [0]],
+      \ 'o':    ['Checkout',         [1]],
+      \ 'O':    ['Checkout',         [0]],
+      \ 'gc':   ['CheckoutAs',       []],
+      \ 'go':   ['CheckoutAs',       []],
+      \ 'dd':   ['Delete',           []],
+      \ 'F':    ['Fetch',            [0]],
+      \ 'f':    ['Fetch',            [0]],
+      \ 'm':    ['Merge',            [0, '']],
+      \ 'M':    ['Merge',            [1, '']],
+      \ 'gm':   ['Merge',            [0, '--no-ff']],
+      \ 'gM':   ['Merge',            [1, '--no-ff']],
+      \ 'r':    ['Rebase',           [0]],
+      \ 'R':    ['Rebase',           [1]],
+      \ '^':    ['Push',             [0, 0]],
+      \ 'g^':   ['Push',             [1, 0]],
+      \ '!^':   ['Push',             [0, 1]],
+      \ 'V':    ['Pull',             []],
+      \ 'P':    ['Push',             [0, 0]],
+      \ 'gP':   ['Push',             [1, 0]],
+      \ '!P':   ['Push',             [0, 1]],
+      \ 'p':    ['Pull',             []],
+      \ ',':    ['Rename',           []],
+      \ '<<':   ['Stash',            [0]],
+      \ '>>':   ['Stash',            [1]],
+      \ 'i':    ['CycleSort',        [0, 1]],
+      \ 'I':    ['CycleSort',        [0, -1]],
+      \ 'gi':   ['CycleSort',        [1, 1]],
+      \ 'gI':   ['CycleSort',        [1, -1]],
+      \ 'a':    ['ToggleSlashSort',  []],
+      \ })
+
 "   {{{2 show_full_ui
 function! s:showing_full_ui()
   return g:twiggy_enable_quickhelp && g:twiggy_show_full_ui
@@ -958,41 +993,6 @@ function! s:Render() abort
   else
     nnoremap <buffer> <silent> gg    :normal! 2gg<CR>
   endif
-
-  let g:twiggy_keymaps = {
-        \ '<CR>':    ['Checkout',         [1]],
-        \ 'c':       ['Checkout',         [1]],
-        \ 'C':       ['Checkout',         [0]],
-        \ 'o':       ['Checkout',         [1]],
-        \ 'O':       ['Checkout',         [0]],
-        \ 'gc':      ['CheckoutAs',       []],
-        \ 'go':      ['CheckoutAs',       []],
-        \ 'dd':      ['Delete',           []],
-        \ 'F':       ['Fetch',            [0]],
-        \ 'f':       ['Fetch',            [0]],
-        \ 'm':       ['Merge',            [0, '']],
-        \ 'M':       ['Merge',            [1, '']],
-        \ 'gm':      ['Merge',            [0, '--no-ff']],
-        \ 'gM':      ['Merge',            [1, '--no-ff']],
-        \ 'r':       ['Rebase',           [0]],
-        \ 'R':       ['Rebase',           [1]],
-        \ '^':       ['Push',             [0, 0]],
-        \ 'g^':      ['Push',             [1, 0]],
-        \ '!^':      ['Push',             [0, 1]],
-        \ 'V':       ['Pull',             []],
-        \ 'P':       ['Push',             [0, 0]],
-        \ 'gP':      ['Push',             [1, 0]],
-        \ '!P':      ['Push',             [0, 1]],
-        \ 'p':       ['Pull',             []],
-        \ ',':       ['Rename',           []],
-        \ '<<':      ['Stash',            [0]],
-        \ '>>':      ['Stash',            [1]],
-        \ 'i':       ['CycleSort',        [0, 1]],
-        \ 'I':       ['CycleSort',        [0, -1]],
-        \ 'gi':      ['CycleSort',        [1, 1]],
-        \ 'gI':      ['CycleSort',        [1, -1]],
-        \ 'a':       ['ToggleSlashSort',  []],
-        \ }
 
   for l:key in keys(g:twiggy_keymaps)
     call s:mapping(l:key, g:twiggy_keymaps[l:key][0], g:twiggy_keymaps[l:key][1])
