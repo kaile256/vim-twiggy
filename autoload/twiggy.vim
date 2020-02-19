@@ -178,12 +178,6 @@ function! s:call(mapping) abort
           \ ."` is deprecated and will eventually be removed.  "
           \ ."Use `".deprecated_mappings[key]."` instead."
   endif
-  call twiggy#call(a:mapping)
-endfunction
-
-function! twiggy#call(mapping) abort
-  " TODO: args are preferable in fullname like 'checkout' to 'c'
-  let key = s:encode_mapping(a:mapping)
   if call('s:' . s:mappings[key][0], s:mappings[key][1])
     call s:ErrorMsg()
   else
