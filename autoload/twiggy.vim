@@ -118,13 +118,13 @@ let g:twiggy_keymaps_on_branch = get(g:, 'twiggy_keymaps_on_branch', {
       \ 'gM':   ['Merge',      [1, '--no-ff']],
       \ 'r':    ['Rebase',     [0]],
       \ 'R':    ['Rebase',     [1]],
-      \ '^':    ['Push',       [0, 0]],
-      \ 'g^':   ['Push',       [1, 0]],
-      \ '!^':   ['Push',       [0, 1]],
+      \ '^':    ['Push',       [0]],
+      \ 'g^':   ['Push',       [1]],
+      \ '!^':   ['Push',       [0, '--force']],
       \ 'V':    ['Pull',       []],
-      \ 'P':    ['Push',       [0, 0]],
-      \ 'gP':   ['Push',       [1, 0]],
-      \ '!P':   ['Push',       [0, 1]],
+      \ 'P':    ['Push',       [0]],
+      \ 'gP':   ['Push',       [1]],
+      \ '!P':   ['Push',       [0, '--force']],
       \ 'p':    ['Pull',       []],
       \ ',':    ['Rename',     []],
       \ '<<':   ['Stash',      [0]],
@@ -1376,7 +1376,7 @@ function! s:Abort(type) abort
 endfunction
 
 "     {{{3 Push
-function! s:Push(choose_upstream, force) abort
+function! s:Push(choose_upstream, ...) abort
   let branch = s:branch_under_cursor()
 
   if !branch.is_local
@@ -1388,10 +1388,7 @@ function! s:Push(choose_upstream, force) abort
 
   let remote_groups = s:git_cmd('remote', 0)
 
-  let flags = ''
-  if a:force
-    let flags .= ' --force'
-  end
+  let flags = a:0 > 0 ? join(a:000) : ''
 
   if branch.tracking ==# '' && !a:choose_upstream
     if g:twiggy_set_upstream
