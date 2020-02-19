@@ -200,19 +200,6 @@ endfunction
 "   {{{2 call
 function! s:call(mapping) abort
   let key = s:encode_mapping(a:mapping)
-  let deprecated_mappings = {
-        \ 'F': 'f',
-        \ '^': 'P',
-        \ 'g^': 'gP',
-        \ '!^': '!P',
-        \ 'V': 'p',
-        \ 'd^': 'dP'
-        \ }
-  if has_key(deprecated_mappings, key)
-    let t:twiggy_deprecation_notice = "WARNING: `".a:mapping
-          \ ."` is deprecated and will eventually be removed.  "
-          \ ."Use `".deprecated_mappings[key]."` instead."
-  endif
   if call('s:' . s:mappings[key][0], s:mappings[key][1])
     call s:ErrorMsg()
   else
