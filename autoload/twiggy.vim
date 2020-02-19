@@ -1376,7 +1376,7 @@ function! s:Abort(type) abort
 endfunction
 
 "     {{{3 Push
-function! s:Push(choose_upstream, ...) abort
+function! s:Push(...) abort
   let branch = s:branch_under_cursor()
 
   if !branch.is_local
@@ -1388,9 +1388,14 @@ function! s:Push(choose_upstream, ...) abort
 
   let remote_groups = s:git_cmd('remote', 0)
 
-  let flags = a:0 > 0 ? join(a:000) : ''
+  let args = a:0 > 0 ? a:000 : []
+  if index(args, 'remote') >= 0
+    let choose_upstream = 1
+    let args = filter(deepcopy(args), "v:val !=? 'remote'")
+  endif
+  let flags = join(args)
 
-  if branch.tracking ==# '' && !a:choose_upstream
+  if branch.tracking ==# '' && !exists('choose_upstream')
     if len(remote_groups) > 1
       redraw
       let group = input("Push to which remote?: ", '', "custom,TwiggyCompleteRemotes")
@@ -1406,7 +1411,7 @@ function! s:Push(choose_upstream, ...) abort
       let flags .= ' -u'
     endif
   else
-    if a:choose_upstream
+    if choose_upstream
       redraw
       let group = input("Push to which remote?: ", '', "custom,TwiggyCompleteRemotes")
     else
